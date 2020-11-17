@@ -10,6 +10,6 @@ namespace buddy_up.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public ClubType ClubTypeId { get; set; }
-        public ICollection<Student> Students { get; set; }
+        public ICollection<StudentClubMembership> StudentClubMemberships { get; set; }
     }
 }

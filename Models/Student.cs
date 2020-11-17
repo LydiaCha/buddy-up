@@ -18,8 +18,7 @@ namespace buddy_up.Models
         public string EmailAddress { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string TelephoneNumber { get; set; }
-
-        public ICollection<Club> Clubs { get; set; }
+        public ICollection<StudentClubMembership> StudentClubMemberships { get; set; }
 
     }
 }
