@@ -7,7 +7,7 @@ namespace buddy_up.Models
 {
     public class Qualification
     {
-        public int ID { get; set; }
+        public int QualificationId { get; set; }
         public string Name { get; set; }
     }
 }
