@@ -7,7 +7,7 @@ namespace buddy_up.Models
 {
     public class Admin
     {
-        public int AdminId { get; set; }
+        public int AdminID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }

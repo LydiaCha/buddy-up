@@ -7,6 +7,7 @@ namespace buddy_up.Models
 {
     public class BuddyMatch
     {
+        public int BuddyMatchID { get; set; }
         public Student MentorId { get; set; }
         public Student MenteeId { get; set; }
     }

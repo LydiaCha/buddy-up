@@ -7,7 +7,7 @@ namespace buddy_up.Models
 {
     public class ClubType
     {
-        public int ClubTypeId { get; set; }
+        public int ClubTypeID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }

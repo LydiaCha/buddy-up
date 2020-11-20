@@ -9,10 +9,9 @@ namespace buddy_up.Models
 {
     public class StudentClubMembership
     {
-        public int ID { get; set; }
-        public int StudentId { get; set; }
+        public int StudentID { get; set; }
         public Student Student { get; set; }
-        public int ClubId { get; set; }
+        public int ClubID { get; set; }
         
         public Club Club { get; set; }
     }

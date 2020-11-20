@@ -30,7 +30,7 @@ namespace buddy_up.Pages.Students
                 return NotFound();
             }
 
-            Student = await _context.Student.FirstOrDefaultAsync(m => m.StudentId == id);
+            Student = await _context.Student.FirstOrDefaultAsync(m => m.StudentID == id);
 
             if (Student == null)
             {
@@ -56,7 +56,7 @@ namespace buddy_up.Pages.Students
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StudentExists(Student.StudentId))
+                if (!StudentExists(Student.StudentID))
                 {
                     return NotFound();
                 }
@@ -71,7 +71,7 @@ namespace buddy_up.Pages.Students
 
         private bool StudentExists(int id)
         {
-            return _context.Student.Any(e => e.StudentId == id);
+            return _context.Student.Any(e => e.StudentID == id);
         }
     }
 }

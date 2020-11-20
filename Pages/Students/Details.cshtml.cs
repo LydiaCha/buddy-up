@@ -28,7 +28,7 @@ namespace buddy_up.Pages.Students
                 return NotFound();
             }
 
-            Student = await _context.Student.FirstOrDefaultAsync(m => m.StudentId == id);
+            Student = await _context.Student.FirstOrDefaultAsync(m => m.StudentID == id);
 
             if (Student == null)
             {
