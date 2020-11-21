@@ -22,7 +22,6 @@ namespace buddy_up
                 try
                 {
                     var context = services.GetRequiredService<BuddyUpContext>();
-                    context.Database.EnsureCreated();
                 }
                 catch (Exception ex)
                 {
