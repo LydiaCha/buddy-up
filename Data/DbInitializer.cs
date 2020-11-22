@@ -8,8 +8,10 @@ namespace buddy_up.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(BuddyUpContext context)
+        public static void Initialize(BuddyUpContext context, IServiceProvider services)
         {
+
+            context.Database.EnsureCreated();
 
             if (context.Student.Any())
             {
@@ -38,7 +40,7 @@ namespace buddy_up.Data
 
             var courses = new Course[]
                 {
-                new Course{Name="Law", CourseID = qualifications.Single(q => q.Name == "LLB").QualificationID, Duration="3 years", Description="UK Law" }
+                new Course{Name="Law", QualificationId = qualifications.Single(q => q.Name == "LLB"), Duration="3 years", Description="UK Law" }
                 };
             foreach (Course c in courses)
             {
@@ -86,7 +88,9 @@ namespace buddy_up.Data
             {
                 context.StudentClubMembership.Add(scm);
             }
-            context.SaveChanges();           
+            context.SaveChanges();     
+            
+
 
         }
 
