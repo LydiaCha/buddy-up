@@ -15,6 +15,8 @@ namespace buddy_up
         {
             var host = CreateWebHostBuilder(args).Build();
 
+            SeedDatabase(host);
+
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -31,6 +33,25 @@ namespace buddy_up
             }
 
             host.Run();
+        }
+
+        private static void SeedDatabase(IWebHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<BuddyUpContext>();
+
+                    DbInitializer.Initialize(context, services);
+                }
+                catch (Exception)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError("An error occurred while seeding the database");
+                }
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
