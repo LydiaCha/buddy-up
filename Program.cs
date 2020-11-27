@@ -23,7 +23,7 @@ namespace buddy_up
 
                 try
                 {
-                    var context = services.GetRequiredService<BuddyUpContext>();
+                    var context = services.GetRequiredService<ApplicationDbContext>();
                 }
                 catch (Exception ex)
                 {
@@ -42,7 +42,7 @@ namespace buddy_up
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<BuddyUpContext>();
+                    var context = services.GetRequiredService<ApplicationDbContext>();
 
                     DbInitializer.Initialize(context, services);
                 }

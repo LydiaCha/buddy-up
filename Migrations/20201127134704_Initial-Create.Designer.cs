@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using buddy_up.Data;
 
-namespace buddy_up.Migrations.ApplicationDb
+namespace buddy_up.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201127134704_Initial-Create")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,6 +221,215 @@ namespace buddy_up.Migrations.ApplicationDb
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("buddy_up.Models.Admin", b =>
+                {
+                    b.Property<int>("AdminID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CountryID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TelephoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AdminID");
+
+                    b.HasIndex("CountryID");
+
+                    b.ToTable("Admin");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.BuddyMatch", b =>
+                {
+                    b.Property<int>("BuddyMatchID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("MenteeIdStudentID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MentorIdStudentID")
+                        .HasColumnType("int");
+
+                    b.HasKey("BuddyMatchID");
+
+                    b.HasIndex("MenteeIdStudentID");
+
+                    b.HasIndex("MentorIdStudentID");
+
+                    b.ToTable("BuddyMatch");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.Club", b =>
+                {
+                    b.Property<int>("ClubID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ClubTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClubID");
+
+                    b.HasIndex("ClubTypeID");
+
+                    b.ToTable("Club");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.ClubType", b =>
+                {
+                    b.Property<int>("ClubTypeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClubTypeID");
+
+                    b.ToTable("ClubType");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.Country", b =>
+                {
+                    b.Property<int>("CountryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CountryID");
+
+                    b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.Course", b =>
+                {
+                    b.Property<int>("CourseID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Duration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("QualificationID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseID");
+
+                    b.HasIndex("QualificationID");
+
+                    b.ToTable("Course");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.Qualification", b =>
+                {
+                    b.Property<int>("QualificationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("QualificationID");
+
+                    b.ToTable("Qualification");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.Student", b =>
+                {
+                    b.Property<int>("StudentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CountryID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CourseID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TelephoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("YearOfStudy")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentID");
+
+                    b.HasIndex("CountryID");
+
+                    b.HasIndex("CourseID");
+
+                    b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.StudentClubMembership", b =>
+                {
+                    b.Property<int>("StudentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClubID")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentID", "ClubID");
+
+                    b.HasIndex("ClubID");
+
+                    b.ToTable("StudentClubMembership");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -266,6 +477,64 @@ namespace buddy_up.Migrations.ApplicationDb
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("buddy_up.Models.Admin", b =>
+                {
+                    b.HasOne("buddy_up.Models.Country", "CountryId")
+                        .WithMany()
+                        .HasForeignKey("CountryID");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.BuddyMatch", b =>
+                {
+                    b.HasOne("buddy_up.Models.Student", "MenteeId")
+                        .WithMany()
+                        .HasForeignKey("MenteeIdStudentID");
+
+                    b.HasOne("buddy_up.Models.Student", "MentorId")
+                        .WithMany()
+                        .HasForeignKey("MentorIdStudentID");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.Club", b =>
+                {
+                    b.HasOne("buddy_up.Models.ClubType", "ClubTypeId")
+                        .WithMany()
+                        .HasForeignKey("ClubTypeID");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.Course", b =>
+                {
+                    b.HasOne("buddy_up.Models.Qualification", "QualificationId")
+                        .WithMany()
+                        .HasForeignKey("QualificationID");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.Student", b =>
+                {
+                    b.HasOne("buddy_up.Models.Country", "CountryId")
+                        .WithMany()
+                        .HasForeignKey("CountryID");
+
+                    b.HasOne("buddy_up.Models.Course", "CourseId")
+                        .WithMany()
+                        .HasForeignKey("CourseID");
+                });
+
+            modelBuilder.Entity("buddy_up.Models.StudentClubMembership", b =>
+                {
+                    b.HasOne("buddy_up.Models.Club", "Club")
+                        .WithMany("StudentClubMemberships")
+                        .HasForeignKey("ClubID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("buddy_up.Models.Student", "Student")
+                        .WithMany("StudentClubMemberships")
+                        .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

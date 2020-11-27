@@ -12,9 +12,9 @@ namespace buddy_up.Pages.Students
 {
     public class DeleteModel : PageModel
     {
-        private readonly buddy_up.Data.BuddyUpContext _context;
+        private readonly buddy_up.Data.ApplicationDbContext _context;
 
-        public DeleteModel(buddy_up.Data.BuddyUpContext context)
+        public DeleteModel(buddy_up.Data.ApplicationDbContext context)
         {
             _context = context;
         }
