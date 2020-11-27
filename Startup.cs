@@ -34,7 +34,7 @@ namespace buddy_up
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
 
-            services.AddDbContext<BuddyUpContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("BuddyUpContext")));
         }
 
