@@ -8,7 +8,7 @@ namespace buddy_up.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(BuddyUpContext context, IServiceProvider services)
+        public static void Initialize(ApplicationDbContext context, IServiceProvider services)
         {
 
             context.Database.EnsureCreated();

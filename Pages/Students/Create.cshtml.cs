@@ -12,9 +12,9 @@ namespace buddy_up.Pages.Students
 {
     public class CreateModel : PageModel
     {
-        private readonly buddy_up.Data.BuddyUpContext _context;
+        private readonly buddy_up.Data.ApplicationDbContext _context;
 
-        public CreateModel(buddy_up.Data.BuddyUpContext context)
+        public CreateModel(buddy_up.Data.ApplicationDbContext context)
         {
             _context = context;
         }
