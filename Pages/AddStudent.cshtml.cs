@@ -8,11 +8,11 @@ using Microsoft.Extensions.Logging;
 
 namespace buddy_up.Pages
 {
-    public class PrivacyModel : PageModel
+    public class AddStudentModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        private readonly ILogger<AddStudentModel> _logger;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        public AddStudentModel(ILogger<AddStudentModel> logger)
         {
             _logger = logger;
         }
