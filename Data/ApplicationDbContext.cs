@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using buddy_up.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace buddy_up.Data
 {
@@ -13,7 +14,7 @@ namespace buddy_up.Data
             : base(options)
         {
         }
-
+        public DbSet<IdentityUser> AspNetUsers {get; set;}
         public DbSet<Student> Student { get; set; }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<BuddyMatch> BuddyMatch { get; set; }
@@ -28,6 +29,7 @@ namespace buddy_up.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<IdentityUser>().ToTable("AspNetUsers");
             modelBuilder.Entity<Student>().ToTable("Student");
             modelBuilder.Entity<Admin>().ToTable("Admin");
             modelBuilder.Entity<BuddyMatch>().ToTable("BuddyMatch");

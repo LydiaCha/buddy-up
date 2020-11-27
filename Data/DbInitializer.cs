@@ -1,4 +1,5 @@
 ﻿using buddy_up.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,6 +126,22 @@ namespace buddy_up.Data
             }
             context.SaveChanges();
 
+            var aspNetUsers = new IdentityUser[]
+            {
+                new IdentityUser{ Id="1", UserName="Test1@test.com", NormalizedUserName="TEST1@TEST.COM", Email="Test1@test.com", NormalizedEmail="TEST1@TEST.COM", EmailConfirmed=true,
+                    PasswordHash="AQAAAAEAACcQAAAAEFfPaxU6pEN8NaI+6voIwbYMBpnlkORgMQFQ0tw06lwOsuqG59/NJkjQaiP8kCMQGg==", PhoneNumberConfirmed=false, TwoFactorEnabled=false, LockoutEnabled=false, AccessFailedCount=0 },
+                new IdentityUser{ Id="2", UserName="Test2@test.com", NormalizedUserName="TEST2@TEST.COM", Email="Test2@test.com", NormalizedEmail="TEST2@TEST.COM", EmailConfirmed=true,
+                    PasswordHash="AQAAAAEAACcQAAAAEFfPaxU6pEN8NaI+6voIwbYMBpnlkORgMQFQ0tw06lwOsuqG59/NJkjQaiP8kCMQGg==", PhoneNumberConfirmed=false, TwoFactorEnabled=false, LockoutEnabled=false, AccessFailedCount=0 },
+                new IdentityUser{ Id="3", UserName="Test3@test.com", NormalizedUserName="TEST3@TEST.COM", Email="Test3@test.com", NormalizedEmail="TEST3@TEST.COM", EmailConfirmed=true,
+                    PasswordHash="AQAAAAEAACcQAAAAEFfPaxU6pEN8NaI+6voIwbYMBpnlkORgMQFQ0tw06lwOsuqG59/NJkjQaiP8kCMQGg==", PhoneNumberConfirmed=false, TwoFactorEnabled=false, LockoutEnabled=false, AccessFailedCount=0 },
+            };
+
+            foreach (IdentityUser i in aspNetUsers)
+            {
+                context.AspNetUsers.Add(i);
+            }
+
+            context.SaveChanges();
         }
 
 
