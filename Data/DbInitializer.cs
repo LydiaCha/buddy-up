@@ -126,6 +126,16 @@ namespace buddy_up.Data
             }
             context.SaveChanges();
 
+            var buddyMatch = new BuddyMatch[]
+           {
+            new BuddyMatch{ MentorId=students.Single(s => s.FirstName == "Deborah" && s.LastName == "Morgan"), MenteeId=students.Single(s => s.FirstName == "Tom" && s.LastName == "Jones") }
+           };
+            foreach (BuddyMatch bm in buddyMatch)
+            {
+                context.BuddyMatch.Add(bm);
+            }
+            context.SaveChanges();
+
             var aspNetUsers = new IdentityUser[]
             {
                 new IdentityUser{ Id="1", UserName="Test1@test.com", NormalizedUserName="TEST1@TEST.COM", Email="Test1@test.com", NormalizedEmail="TEST1@TEST.COM", EmailConfirmed=true,
