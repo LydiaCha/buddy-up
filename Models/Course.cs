@@ -10,6 +10,7 @@ namespace buddy_up.Models
     {
         public int CourseID { get; set; }
         [Required]
+        [Display(Name = "Course")]
         public string Name { get; set; }
         [Required]
         [Display(Name = "Qualification Type")]
