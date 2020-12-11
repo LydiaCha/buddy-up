@@ -23,7 +23,12 @@ namespace buddy_up.Pages.Students
 
         public async Task OnGetAsync()
         {
-            Student = await _context.Student.ToListAsync();
+            Student = await _context.Student
+                .Include(s => s.CourseId)
+                .Include(s => s.StudentClubMemberships)
+                    .ThenInclude(s => s.Club)
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }

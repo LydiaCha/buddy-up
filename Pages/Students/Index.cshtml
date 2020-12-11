@@ -38,7 +38,10 @@
                 @Html.DisplayFor(modelItem => item.CourseId.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StudentClubMemberships)
+                @foreach (var club in item.StudentClubMemberships) 
+                { 
+                    @club.Club.Name 
+                }
             </td>
             <td>
                 "Has Buddy Placeholder"

@@ -8,6 +8,7 @@ namespace buddy_up.Models
 {
     public class Course
     {
+        [Key]
         public int CourseID { get; set; }
         [Required]
         [Display(Name = "Course")]
