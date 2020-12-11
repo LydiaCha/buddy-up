@@ -14,25 +14,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].FirstName)
+                @Html.DisplayNameFor(model => model.Student[0].FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].LastName)
+                @Html.DisplayNameFor(model => model.Student[0].CourseId.CourseID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].Address)
+                @Html.DisplayNameFor(model => model.Student[0].StudentClubMemberships)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].YearOfStudy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].EmailAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].DateOfBirth)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].TelephoneNumber)
+                "Has Buddy Placeholder"
             </th>
             <th></th>
         </tr>
@@ -41,25 +32,16 @@
 @foreach (var item in Model.Student) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.CourseId.CourseID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
+                @Html.DisplayFor(modelItem => item.StudentClubMemberships)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.YearOfStudy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TelephoneNumber)
+                "Has Buddy Placeholder"
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.StudentID">Edit</a> |

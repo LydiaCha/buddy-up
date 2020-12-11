@@ -22,5 +22,12 @@ namespace buddy_up.Models
         public string TelephoneNumber { get; set; }
         public ICollection<StudentClubMembership> StudentClubMemberships { get; set; }
 
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
     }
 }
