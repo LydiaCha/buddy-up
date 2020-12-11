@@ -23,7 +23,7 @@
                 @Html.DisplayNameFor(model => model.Student[0].StudentClubMemberships)
             </th>
             <th>
-                "Has Buddy Placeholder"
+                Has Buddy?
             </th>
             <th></th>
         </tr>
@@ -44,7 +44,11 @@
                 }
             </td>
             <td>
-                "Has Buddy Placeholder"
+                @foreach (var entry in Model.BuddyMatch) {
+                    @if (entry.MentorId.StudentID == item.StudentID) { <p>Yes</p> }
+                    else if (entry.MenteeId.StudentID == item.StudentID) { <p>Yes</p> }
+                    else { <p>No</p> }
+                }
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.StudentID">Edit</a> |
