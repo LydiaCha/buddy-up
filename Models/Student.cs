@@ -34,6 +34,7 @@ namespace buddy_up.Models
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date of Birth")]
         public DateTime DateOfBirth { get; set; }
         [Display(Name = "Telephone Number")]
         public string TelephoneNumber { get; set; }
