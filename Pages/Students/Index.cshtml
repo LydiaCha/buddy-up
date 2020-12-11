@@ -17,13 +17,13 @@
                 @Html.DisplayNameFor(model => model.Student[0].FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student[0].CourseId.CourseID)
+                @Html.DisplayNameFor(model => model.Student[0].CourseId.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].StudentClubMemberships)
             </th>
             <th>
-                "Has Buddy Placeholder"
+                Has Buddy?
             </th>
             <th></th>
         </tr>
@@ -35,13 +35,20 @@
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CourseId.CourseID)
+                @Html.DisplayFor(modelItem => item.CourseId.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StudentClubMemberships)
+                @foreach (var club in item.StudentClubMemberships) 
+                { 
+                    @club.Club.Name 
+                }
             </td>
             <td>
-                "Has Buddy Placeholder"
+                @foreach (var entry in Model.BuddyMatch) {
+                    @if (entry.MentorId.StudentID == item.StudentID) { <p>Yes</p> }
+                    else if (entry.MenteeId.StudentID == item.StudentID) { <p>Yes</p> }
+                    else { <p>No</p> }
+                }
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.StudentID">Edit</a> |

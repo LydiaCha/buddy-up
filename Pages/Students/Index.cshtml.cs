@@ -20,10 +20,22 @@ namespace buddy_up.Pages.Students
         }
 
         public IList<Student> Student { get;set; }
+        public IList<BuddyMatch> BuddyMatch { get; set; }
 
         public async Task OnGetAsync()
         {
-            Student = await _context.Student.ToListAsync();
+            Student = await _context.Student
+                .Include(s => s.CourseId)
+                .Include(s => s.StudentClubMemberships)
+                    .ThenInclude(s => s.Club)
+                .AsNoTracking()
+                .ToListAsync();
+
+            BuddyMatch = await _context.BuddyMatch
+                .Include(bm => bm.MenteeId)
+                .Include(bm => bm.MentorId)
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }
