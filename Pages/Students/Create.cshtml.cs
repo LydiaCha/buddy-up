@@ -36,10 +36,20 @@ namespace buddy_up.Pages.Students
                 return Page();
             }
 
-            _context.Student.Add(Student);
+            var emptyStudent = new Student();
+
+            if (await TryUpdateModelAsync<Student>(
+                emptyStudent,
+                "student",
+                s => s.FirstName, s => s.LastName, s => s.TelephoneNumber, s => s.YearOfStudy, s => s.DateOfBirth, s => s.Address, s => s.EmailAddress))
+            { 
+            _context.Student.Add(emptyStudent);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+            }
+
+            return null;
         }
     }
 }

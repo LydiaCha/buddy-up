@@ -23,7 +23,6 @@ namespace buddy_up.Models
         public Country CountryId { get; set; }
         [Required]
         [Display(Name = "Email Address")]
-        [RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)", ErrorMessage = "Please enter a valid email address.")]
         public string EmailAddress { get; set; }
         [Required]
         [DataType(DataType.Date)]
