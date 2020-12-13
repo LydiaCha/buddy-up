@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace buddy_up.Pages.Students
 {
-    public class CountryNamePageModel : PageModel
+    public class DropdownsPageModel : PageModel
     {
         public SelectList CountryNameSL { get; set; }
 
@@ -22,6 +22,19 @@ namespace buddy_up.Pages.Students
 
             CountryNameSL = new SelectList(countryQuery.AsNoTracking(),
                         "CountryID", "Name", selectedCountry);
+        }
+
+        public SelectList CourseNameSL { get; set; }
+
+        public void PopulateCourseDropDownList(buddy_up.Data.ApplicationDbContext _context,
+            object selectedCourse = null)
+        {
+            var courseQuery = from c in _context.Course
+                              orderby c.Name // Sort by name.
+                              select c;
+
+            CourseNameSL = new SelectList(courseQuery.AsNoTracking(),
+                        "CourseID", "Name", selectedCourse);
         }
     }
 }

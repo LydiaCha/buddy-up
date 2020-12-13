@@ -21,9 +21,9 @@ namespace buddy_up.Models
         public string LastName { get; set; }
         [Required]
         public string Address { get; set; }
-        [Required]
+    //    [Required]
         public Country CountryId { get; set; }
-        [Required]
+    //    [Required]
         [Display(Name = "Course")]
         public Course CourseId { get; set; }
         [Required]

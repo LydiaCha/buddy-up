@@ -10,7 +10,7 @@ using buddy_up.Models;
 
 namespace buddy_up.Pages.Students
 {
-    public class CreateModel : CountryNamePageModel
+    public class CreateModel : DropdownsPageModel
     {
         private readonly buddy_up.Data.ApplicationDbContext _context;
 
@@ -22,6 +22,7 @@ namespace buddy_up.Pages.Students
         public IActionResult OnGet()
         {
             PopulateCoutryDropDownList(_context);
+            PopulateCourseDropDownList(_context);
             return Page();
         }
         [BindProperty]
@@ -31,17 +32,21 @@ namespace buddy_up.Pages.Students
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            var emptyStudent = new Student();
             if (!ModelState.IsValid)
             {
+                PopulateCoutryDropDownList(_context, emptyStudent.CountryId);
+                PopulateCourseDropDownList(_context, emptyStudent.CourseId);
                 return Page();
             }
-
-            var emptyStudent = new Student();
 
             if (await TryUpdateModelAsync<Student>(
                 emptyStudent,
                 "student",
-                s => s.FirstName, s => s.LastName, s => s.TelephoneNumber, s => s.YearOfStudy, s => s.DateOfBirth, s => s.Address, s => s.EmailAddress))
+                s => s.FirstName, s => s.LastName, s => s.Address, s => s.CountryId,
+                s => s.CourseId,  s => s.YearOfStudy, s => s.EmailAddress, 
+                s => s.DateOfBirth, s => s.TelephoneNumber
+                 ))
             { 
             _context.Student.Add(emptyStudent);
             await _context.SaveChangesAsync();
@@ -50,7 +55,8 @@ namespace buddy_up.Pages.Students
             }
 
             PopulateCoutryDropDownList(_context, emptyStudent.CountryId);
-            return null;
+            PopulateCourseDropDownList(_context, emptyStudent.CourseId);
+            return Page();
         }
     }
 }
