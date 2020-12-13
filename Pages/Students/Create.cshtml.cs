@@ -10,7 +10,7 @@ using buddy_up.Models;
 
 namespace buddy_up.Pages.Students
 {
-    public class CreateModel : PageModel
+    public class CreateModel : CountryNamePageModel
     {
         private readonly buddy_up.Data.ApplicationDbContext _context;
 
@@ -21,9 +21,9 @@ namespace buddy_up.Pages.Students
 
         public IActionResult OnGet()
         {
+            PopulateCoutryDropDownList(_context);
             return Page();
         }
-
         [BindProperty]
         public Student Student { get; set; }
 
@@ -49,6 +49,7 @@ namespace buddy_up.Pages.Students
             return RedirectToPage("./Index");
             }
 
+            PopulateCoutryDropDownList(_context, emptyStudent.CountryId);
             return null;
         }
     }

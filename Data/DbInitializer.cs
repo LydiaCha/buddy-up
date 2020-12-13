@@ -25,6 +25,10 @@ namespace buddy_up.Data
                 new Country{Name="Poland"},
                 new Country{Name="Greece"},
                 new Country{Name="United States"},
+                new Country{Name="France"},
+                new Country{Name="Italy"},
+                new Country{Name="Netherlands"},
+                new Country{Name="Belgium"}
                 };
             foreach (Country c in countries)
             {
@@ -48,7 +52,11 @@ namespace buddy_up.Data
                 {
                 new Course{Name="Law", QualificationId = qualifications.Single(q => q.Name == "LLB"), Duration="3 years", Description="UK Law" },
                 new Course{Name="Digital and Technology Solutions", QualificationId = qualifications.Single(q => q.Name == "BSC"), Duration="3 years", Description="IT and software engineering." },
-                new Course{Name="Psychology", QualificationId = qualifications.Single(q => q.Name == "BA"), Duration="3 years", Description="Deep dive into the human mind" }
+                new Course{Name="Psychology", QualificationId = qualifications.Single(q => q.Name == "BA"), Duration="3 years", Description="Deep dive into the human mind" },
+                new Course{Name="Mathematics", QualificationId = qualifications.Single(q => q.Name == "BSC"), Duration="3 years", Description="Study of numbers" },
+                new Course{Name="Film", QualificationId = qualifications.Single(q => q.Name == "BA"), Duration="3 years", Description="All about the film industry, including production" },
+                new Course{Name="Medicine", QualificationId = qualifications.Single(q => q.Name == "BSC"), Duration="5 years", Description="Healing the human body" },
+                new Course{Name="Archeology", QualificationId = qualifications.Single(q => q.Name == "BA"), Duration="4 years", Description="Digging for treasure" }
                 };
             foreach (Course c in courses)
             {
@@ -60,7 +68,10 @@ namespace buddy_up.Data
                 {
                 new ClubType{Name="Extreme Sports", Description="Physically demanding and dangerous" },
                 new ClubType{Name="Crafts", Description="Variety of crafts to do at home" },
-                new ClubType{Name="Music", Description="Music appreciation society" }
+                new ClubType{Name="Music", Description="Music appreciation society" },
+                new ClubType{Name="Sports", Description="Physical activity" },
+                new ClubType{Name="Intellectual", Description="Mentally demanding" },
+                new ClubType{Name="Media", Description="Various media related clubs" }
                 };
             foreach (ClubType ct in clubTypes)
             {
@@ -72,7 +83,10 @@ namespace buddy_up.Data
     {
                 new Club{Name="Snowboarding", ClubTypeId=clubTypes.Single(ct => ct.Name == "Extreme Sports") },
                 new Club{Name="Knitting", ClubTypeId=clubTypes.Single(ct => ct.Name == "Crafts") },
-                new Club{Name="Opera Lovers", ClubTypeId=clubTypes.Single(ct => ct.Name == "Music") }
+                new Club{Name="Basketball", ClubTypeId=clubTypes.Single(ct => ct.Name == "Sports") },
+                new Club{Name="Football", ClubTypeId=clubTypes.Single(ct => ct.Name == "Sports") },
+                new Club{Name="Harry Potter", ClubTypeId=clubTypes.Single(ct => ct.Name == "Media") },
+                new Club{Name="Chess", ClubTypeId=clubTypes.Single(ct => ct.Name == "Intellectual") }
     };
             foreach (Club c in clubs)
             {
