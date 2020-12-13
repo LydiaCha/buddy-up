@@ -20,7 +20,7 @@
             </th>
             <th>
                 <a asp-page="./Index" asp-route-sortOrder="@Model.CourseSort">
-                    @Html.DisplayNameFor(model => model.Student[0].CourseId.Name)
+                    @Html.DisplayNameFor(model => model.Student[0].Course.Name)
                     </a>
             </th>
             <th>
@@ -39,7 +39,7 @@
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CourseId.Name)
+                @Html.DisplayFor(modelItem => item.Course.Name)
             </td>
             <td>
                 @foreach (var club in item.StudentClubMemberships) 

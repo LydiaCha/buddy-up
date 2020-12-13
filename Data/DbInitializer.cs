@@ -86,7 +86,8 @@ namespace buddy_up.Data
                 new Club{Name="Basketball", ClubTypeId=clubTypes.Single(ct => ct.Name == "Sports") },
                 new Club{Name="Football", ClubTypeId=clubTypes.Single(ct => ct.Name == "Sports") },
                 new Club{Name="Harry Potter", ClubTypeId=clubTypes.Single(ct => ct.Name == "Media") },
-                new Club{Name="Chess", ClubTypeId=clubTypes.Single(ct => ct.Name == "Intellectual") }
+                new Club{Name="Chess", ClubTypeId=clubTypes.Single(ct => ct.Name == "Intellectual") },
+                new Club{Name="Running", ClubTypeId=clubTypes.Single(ct => ct.Name == "Sports") }
     };
             foreach (Club c in clubs)
             {
@@ -96,12 +97,12 @@ namespace buddy_up.Data
 
             var students = new Student[]
             {
-            new Student{ FirstName="Carson", LastName="Alexander", Address="24 Happy Road, London, W1 0HU", CountryId=countries.Single(c => c.Name == "United Kingdom"),
-                CourseId = courses.Single(c => c.Name == "Law"), YearOfStudy=2, EmailAddress="Carson@hotmail.com", DateOfBirth=DateTime.Parse("2001-09-01"), TelephoneNumber="07895186899"},
-            new Student{ FirstName="Tom", LastName="Jones", Address="10 Swimming Lane, Cardif, C14 6LD", CountryId=countries.Single(c => c.Name == "United Kingdom"),
-                CourseId = courses.Single(c => c.Name == "Digital and Technology Solutions"), YearOfStudy=1, EmailAddress="TomJones@hotmail.com", DateOfBirth=DateTime.Parse("1960-09-10"), TelephoneNumber="07995186779"},
-            new Student{ FirstName="Deborah", LastName="Morgan", Address="1501 Holywood Plaza, Miami, 15-129", CountryId=countries.Single(c => c.Name == "United States"),
-                CourseId = courses.Single(c => c.Name == "Psychology"), YearOfStudy=1, EmailAddress="DMorgan@miami.com", DateOfBirth=DateTime.Parse("1980-05-14"), TelephoneNumber="00117895154899"}
+            new Student{ FirstName="Carson", LastName="Alexander", Address="24 Happy Road, London, W1 0HU", CountryId=countries.Single(c => c.Name == "United Kingdom").CountryID,
+                CourseId = courses.Single(c => c.Name == "Law").CourseID, YearOfStudy=2, EmailAddress="Carson@hotmail.com", DateOfBirth=DateTime.Parse("2001-09-01"), TelephoneNumber="07895186899"},
+            new Student{ FirstName="Tom", LastName="Jones", Address="10 Swimming Lane, Cardif, C14 6LD", CountryId=countries.Single(c => c.Name == "United Kingdom").CountryID,
+                CourseId = courses.Single(c => c.Name == "Digital and Technology Solutions").CourseID, YearOfStudy=1, EmailAddress="TomJones@hotmail.com", DateOfBirth=DateTime.Parse("1960-09-10"), TelephoneNumber="07995186779"},
+            new Student{ FirstName="Deborah", LastName="Morgan", Address="1501 Holywood Plaza, Miami, 15-129", CountryId=countries.Single(c => c.Name == "United States").CountryID,
+                CourseId = courses.Single(c => c.Name == "Psychology").CourseID, YearOfStudy=1, EmailAddress="DMorgan@miami.com", DateOfBirth=DateTime.Parse("1980-05-14"), TelephoneNumber="00117895154899"},
             };
             foreach (Student s in students)
             {
@@ -110,28 +111,27 @@ namespace buddy_up.Data
             context.SaveChanges();
 
             var studentClubMemberships = new StudentClubMembership[]
-{
-    
+            {
                 new StudentClubMembership{StudentID=students.Single(s => (s.FirstName == "Carson" && s.LastName == "Alexander")).StudentID,
                     ClubID=clubs.Single(c => c.Name == "Snowboarding").ClubID },
                 new StudentClubMembership{StudentID=students.Single(s => (s.FirstName == "Tom" && s.LastName == "Jones")).StudentID,
                     ClubID=clubs.Single(c => c.Name == "Knitting").ClubID },
                 new StudentClubMembership{StudentID=students.Single(s => (s.FirstName == "Deborah" && s.LastName == "Morgan")).StudentID,
-                    ClubID=clubs.Single(c => c.Name == "Opera Lovers").ClubID }
-}; 
+                    ClubID=clubs.Single(c => c.Name == "Running").ClubID }
+            };
             foreach (StudentClubMembership scm in studentClubMemberships)
             {
                 context.StudentClubMembership.Add(scm);
             }
-            context.SaveChanges();
+            /*       context.SaveChanges();*/
 
             var admins = new Admin[]
                        {
-            new Admin{ FirstName="Lydia", LastName="C", Address="15 Athens Place, Larissa, 23-098", CountryId=countries.Single(c => c.Name == "Greece"),
+            new Admin{ FirstName="Lydia", LastName="C", Address="15 Athens Place, Larissa, 23-098", CountryId=countries.SingleOrDefault(c => c.Name == "Greece").CountryID,
                 EmailAddress="LydiaC@hotmail.com", DateOfBirth=DateTime.Parse("1997-04-23"), TelephoneNumber="07896176899"},
-            new Admin{ FirstName="Pheobe", LastName="Waller-Bridge", Address="11 Priory Lane, London, W1C 4GH", CountryId=countries.Single(c => c.Name == "United Kingdom"),
+            new Admin{ FirstName="Pheobe", LastName="Waller-Bridge", Address="11 Priory Lane, London, W1C 4GH", CountryId=countries.SingleOrDefault(c => c.Name == "United Kingdom").CountryID,
                 EmailAddress="PWB@hotmail.com", DateOfBirth=DateTime.Parse("1986-01-30"), TelephoneNumber="07967486779"},
-            new Admin{ FirstName="Harry", LastName="Morgan", Address="101 Cross Avenue, Miami, 11-189", CountryId=countries.Single(c => c.Name == "United States"),
+            new Admin{ FirstName="Harry", LastName="Morgan", Address="101 Cross Avenue, Miami, 11-189", CountryId=countries.SingleOrDefault(c => c.Name == "United States").CountryID,
                 EmailAddress="HMorgan@miami.com", DateOfBirth=DateTime.Parse("1960-04-15"), TelephoneNumber="00117895154811"}
                        };
             foreach (Admin a in admins)
@@ -164,6 +164,7 @@ namespace buddy_up.Data
             {
                 context.AspNetUsers.Add(i);
             }
+
 
             context.SaveChanges();
         }

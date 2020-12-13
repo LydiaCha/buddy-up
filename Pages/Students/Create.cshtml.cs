@@ -47,7 +47,7 @@ namespace buddy_up.Pages.Students
                 s => s.CourseId,  s => s.YearOfStudy, s => s.EmailAddress, 
                 s => s.DateOfBirth, s => s.TelephoneNumber
                  ))
-            { 
+            {
             _context.Student.Add(emptyStudent);
             await _context.SaveChangesAsync();
 

@@ -19,8 +19,9 @@ namespace buddy_up.Models
         public string LastName { get; set; }
         public string Address { get; set; }
 
+        public int CountryId { get; set; }
         [Display(Name = "Country")]
-        public Country CountryId { get; set; }
+        public Country Country { get; set; }
         [Required]
         [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }

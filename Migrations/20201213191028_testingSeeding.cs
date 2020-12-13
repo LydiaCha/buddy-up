@@ -2,7 +2,7 @@
 
 namespace buddy_up.Migrations
 {
-    public partial class loginform : Migration
+    public partial class testingSeeding : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
