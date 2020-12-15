@@ -60,5 +60,33 @@ namespace buddy_up.Pages.Students
                 });
             }
         }
+        public void UpdateStudentClubs(ApplicationDbContext context, string[] selectedClubs, Student studentToUpdate)
+        {
+            if (selectedClubs == null)
+            {
+                studentToUpdate.StudentClubMemberships = new List<StudentClubMembership>();
+                return;
+            }
+            var selectedClubsHS = new HashSet<string>(selectedClubs);
+            var studentClubs = new HashSet<int>(studentToUpdate.StudentClubMemberships.Select(c => c.Club.ClubID));
+            foreach(var club in context.Club)
+            {
+                if (selectedClubsHS.Contains(club.ClubID.ToString()))
+                {
+                    if (!studentClubs.Contains(club.ClubID))
+                    {
+                        studentToUpdate.StudentClubMemberships.Add(new StudentClubMembership { StudentID = studentToUpdate.StudentID, ClubID = club.ClubID });
+                    }
+                }
+                else
+                {
+                    if (studentClubs.Contains(club.ClubID))
+                    {
+                        StudentClubMembership clubToRemove = studentToUpdate.StudentClubMemberships.SingleOrDefault(s => s.ClubID == club.ClubID);
+                        context.Remove(clubToRemove);
+                    }
+                }
+            }
+        }
     }
 }

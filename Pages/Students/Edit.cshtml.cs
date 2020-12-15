@@ -11,7 +11,7 @@ using buddy_up.Models;
 
 namespace buddy_up.Pages.Students
 {
-    public class EditModel : PageModel
+    public class EditModel : DropdownsPageModel
     {
         private readonly buddy_up.Data.ApplicationDbContext _context;
 
@@ -30,48 +30,56 @@ namespace buddy_up.Pages.Students
                 return NotFound();
             }
 
-            Student = await _context.Student.FirstOrDefaultAsync(m => m.StudentID == id);
+            Student = await _context.Student
+                .Include(s => s.StudentClubMemberships).ThenInclude(s => s.Club)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.StudentID == id);
 
             if (Student == null)
             {
                 return NotFound();
             }
+
+            PopulateCoutryDropDownList(_context, Student.CountryId);
+            PopulateCourseDropDownList(_context, Student.CourseId);
+            PopulateAssignedClubData(_context, Student);
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedClubs)
         {
+            var studentToUpdate = await _context.Student
+                .Include(s => s.StudentClubMemberships).ThenInclude(s => s.Club)
+                .FirstOrDefaultAsync(m => m.StudentID == id);
+
             if (!ModelState.IsValid)
             {
+                PopulateCoutryDropDownList(_context, studentToUpdate.CountryId);
+                PopulateCourseDropDownList(_context, studentToUpdate.CourseId);
+                PopulateAssignedClubData(_context, studentToUpdate);
                 return Page();
             }
 
-            _context.Attach(Student).State = EntityState.Modified;
-
-            try
+            if (await TryUpdateModelAsync<Student>(
+                 studentToUpdate,
+                "student",
+                s => s.FirstName, s => s.LastName, s => s.Address, s => s.CountryId,
+                s => s.CourseId, s => s.YearOfStudy, s => s.EmailAddress,
+                s => s.DateOfBirth, s => s.TelephoneNumber
+                   ))
             {
+                UpdateStudentClubs(_context, selectedClubs, studentToUpdate);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(Student.StudentID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            UpdateStudentClubs(_context, selectedClubs, studentToUpdate);
+            PopulateCoutryDropDownList(_context, studentToUpdate.CountryId);
+            PopulateCourseDropDownList(_context, studentToUpdate.CourseId);
+            PopulateAssignedClubData(_context, studentToUpdate);
+            return Page();
         }
-
-        private bool StudentExists(int id)
-        {
-            return _context.Student.Any(e => e.StudentID == id);
         }
-    }
 }

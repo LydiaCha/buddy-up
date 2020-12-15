@@ -30,6 +30,12 @@
                 <span asp-validation-for="Student.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Student.Country" class="control-label"></label>
+                <select asp-for="Student.CountryId" class="form-control" asp-items="@Model.CountryNameSL">
+                </select>
+                <span asp-validation-for="Student.CountryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Student.YearOfStudy" class="control-label"></label>
                 <input asp-for="Student.YearOfStudy" class="form-control" />
                 <span asp-validation-for="Student.YearOfStudy" class="text-danger"></span>
@@ -50,9 +56,41 @@
                 <span asp-validation-for="Student.TelephoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="Student.Course" class="control-label"></label>
+                <select asp-for="Student.CourseId" class="form-control" asp-items="@Model.CourseNameSL">
+                </select>
+                <span asp-validation-for="Student.CourseId" class="text-danger"></span>
             </div>
-        </form>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+
+                                foreach (var club in Model.AssignedClubDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedClubs"
+                                               value="@club.ClubID"
+                                               @(Html.Raw(club.Assigned ? "checked=\"checked\"" : "")) />
+                                        @club.ClubID @:  @club.Name
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
     </div>
 </div>
 
