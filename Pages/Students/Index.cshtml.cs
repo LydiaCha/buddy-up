@@ -40,10 +40,10 @@ namespace buddy_up.Pages.Students
                     studentIQ = studentIQ.OrderByDescending(s => s.LastName);
                     break;
                 case "Course":
-                    studentIQ = studentIQ.OrderBy(s => s.CourseId.Name);
+                    studentIQ = studentIQ.OrderBy(s => s.Course.Name);
                     break;
                 case "course_desc":
-                    studentIQ = studentIQ.OrderByDescending(s => s.CourseId.Name);
+                    studentIQ = studentIQ.OrderByDescending(s => s.Course.Name);
                     break;
                 default:
                     studentIQ = studentIQ.OrderBy(s => s.LastName);
@@ -52,7 +52,7 @@ namespace buddy_up.Pages.Students
 
 
             Student = await studentIQ
-                .Include(s => s.CourseId)
+                .Include(s => s.Course)
                 .Include(s => s.StudentClubMemberships)
                     .ThenInclude(s => s.Club)
                 .AsNoTracking()

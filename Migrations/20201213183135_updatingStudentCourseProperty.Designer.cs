@@ -10,14 +10,14 @@ using buddy_up.Data;
 namespace buddy_up.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201127142318_login-form")]
-    partial class loginform
+    [Migration("20201213183135_updatingStudentCourseProperty")]
+    partial class updatingStudentCourseProperty
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -238,13 +238,18 @@ namespace buddy_up.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("TelephoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -289,7 +294,9 @@ namespace buddy_up.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("ClubID");
 
@@ -309,7 +316,9 @@ namespace buddy_up.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("ClubTypeID");
 
@@ -324,6 +333,7 @@ namespace buddy_up.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CountryID");
@@ -339,15 +349,19 @@ namespace buddy_up.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
 
                     b.Property<string>("Duration")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("QualificationID")
+                    b.Property<int>("QualificationID")
                         .HasColumnType("int");
 
                     b.HasKey("CourseID");
@@ -365,6 +379,7 @@ namespace buddy_up.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("QualificationID");
@@ -380,25 +395,31 @@ namespace buddy_up.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CountryID")
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CourseID")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("TelephoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -408,9 +429,9 @@ namespace buddy_up.Migrations
 
                     b.HasKey("StudentID");
 
-                    b.HasIndex("CountryID");
+                    b.HasIndex("CountryId");
 
-                    b.HasIndex("CourseID");
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Student");
                 });
@@ -510,18 +531,24 @@ namespace buddy_up.Migrations
                 {
                     b.HasOne("buddy_up.Models.Qualification", "QualificationId")
                         .WithMany()
-                        .HasForeignKey("QualificationID");
+                        .HasForeignKey("QualificationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("buddy_up.Models.Student", b =>
                 {
-                    b.HasOne("buddy_up.Models.Country", "CountryId")
+                    b.HasOne("buddy_up.Models.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryID");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("buddy_up.Models.Course", "CourseId")
+                    b.HasOne("buddy_up.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseID");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("buddy_up.Models.StudentClubMembership", b =>

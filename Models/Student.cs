@@ -22,16 +22,18 @@ namespace buddy_up.Models
         [Required]
         public string Address { get; set; }
         [Required]
-        public Country CountryId { get; set; }
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
         [Required]
+        public int CourseId { get; set; }
+
         [Display(Name = "Course")]
-        public Course CourseId { get; set; }
+        public Course Course { get; set; }
         [Required]
         [Display(Name = "Year of Study")]
         public int YearOfStudy { get; set; }
         [Required]
         [Display(Name = "Email Address")]
-        [RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)", ErrorMessage = "Please enter a valid email address.")]
         public string EmailAddress { get; set; }
         [Required]
         [DataType(DataType.Date)]

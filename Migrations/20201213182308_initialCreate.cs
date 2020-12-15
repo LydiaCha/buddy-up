@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace buddy_up.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace buddy_up.Migrations
                 {
                     ClubTypeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -66,7 +66,7 @@ namespace buddy_up.Migrations
                 {
                     CountryID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,7 +79,7 @@ namespace buddy_up.Migrations
                 {
                     QualificationID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -198,7 +198,7 @@ namespace buddy_up.Migrations
                 {
                     ClubID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     ClubTypeID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -218,11 +218,11 @@ namespace buddy_up.Migrations
                 {
                     AdminID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
                     Address = table.Column<string>(nullable: true),
                     CountryID = table.Column<int>(nullable: true),
-                    EmailAddress = table.Column<string>(nullable: true),
+                    EmailAddress = table.Column<string>(nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
                     TelephoneNumber = table.Column<string>(nullable: true)
                 },
@@ -243,10 +243,10 @@ namespace buddy_up.Migrations
                 {
                     CourseID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    QualificationID = table.Column<int>(nullable: true),
-                    Duration = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false),
+                    QualificationID = table.Column<int>(nullable: false),
+                    Duration = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -256,7 +256,7 @@ namespace buddy_up.Migrations
                         column: x => x.QualificationID,
                         principalTable: "Qualification",
                         principalColumn: "QualificationID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -265,13 +265,13 @@ namespace buddy_up.Migrations
                 {
                     StudentID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    CountryID = table.Column<int>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    Address = table.Column<string>(nullable: false),
+                    CountryId = table.Column<int>(nullable: false),
                     CourseID = table.Column<int>(nullable: true),
                     YearOfStudy = table.Column<int>(nullable: false),
-                    EmailAddress = table.Column<string>(nullable: true),
+                    EmailAddress = table.Column<string>(nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
                     TelephoneNumber = table.Column<string>(nullable: true)
                 },
@@ -279,11 +279,11 @@ namespace buddy_up.Migrations
                 {
                     table.PrimaryKey("PK_Student", x => x.StudentID);
                     table.ForeignKey(
-                        name: "FK_Student_Country_CountryID",
-                        column: x => x.CountryID,
+                        name: "FK_Student_Country_CountryId",
+                        column: x => x.CountryId,
                         principalTable: "Country",
                         principalColumn: "CountryID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Student_Course_CourseID",
                         column: x => x.CourseID,
@@ -407,9 +407,9 @@ namespace buddy_up.Migrations
                 column: "QualificationID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Student_CountryID",
+                name: "IX_Student_CountryId",
                 table: "Student",
-                column: "CountryID");
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Student_CourseID",
