@@ -5,23 +5,40 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<style type="text/css">
+    .icon {
+        color: #000;
+        font-size: 20px;
+    }
+    .icon-green {
+        color: #0dd95b;
+        font-size: 20px;
+    }
+    .icon-red {
+        color: #e80909;
+        font-size: 20px;
+    }
+    
+</style>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
+
+<h1 class="pb-3">All Students</h1>
+
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
-                    @Html.DisplayNameFor(model => model.Student[0].FullName)
-                    </a>
+                @Html.DisplayNameFor(model => model.Student[0].FullName)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort" title="Sort" class="text-right">
+                    <i class="fas fa-sort icon"></i>
+                </a>
             </th>
+            
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.CourseSort">
-                    @Html.DisplayNameFor(model => model.Student[0].Course.Name)
-                    </a>
+                @Html.DisplayNameFor(model => model.Student[0].Course.Name)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.CourseSort" title="Sort">
+                    <i class="fas fa-sort icon"></i>
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].StudentClubMemberships)
@@ -47,17 +64,17 @@
                 <div> @club.Club.Name </div>
                 }
             </td>
-            <td>
+            <td class="text-center">
                 @foreach (var entry in Model.BuddyMatch) {
-                    @if (entry.MentorId.StudentID == item.StudentID) { <p>Yes</p> }
-                    else if (entry.MenteeId.StudentID == item.StudentID) { <p>Yes</p> }
-                    else { <p>No</p> }
+                    @if (entry.MentorId.StudentID == item.StudentID) { <i class="fas fa-check icon-green"></i> }
+                    else if (entry.MenteeId.StudentID == item.StudentID) { <i class="fas fa-check icon-green"></i> }
+                    else { <i class="fas fa-times icon-red"></i> }
                 }
             </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.StudentID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.StudentID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.StudentID">Delete</a>
+            <td class="text-center">
+                <a asp-page="./Details" asp-route-id="@item.StudentID" title="Details"><i class="fas fa-info-circle icon"></i></a>
+                <a asp-page="./Edit" asp-route-id="@item.StudentID" title="Edit"><i class="fas fa-pencil-alt icon pl-2"></i></a>
+                <a asp-page="./Delete" asp-route-id="@item.StudentID" title="Delete"><i class="fas fa-trash-alt icon pl-2"></i></a>
             </td>
         </tr>
 }

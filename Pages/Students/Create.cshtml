@@ -5,12 +5,17 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<style>
+    .table-spacing {
+        border-spacing: 15px;
+        border-collapse: separate;
+    }
+</style>
 
-<h4>Student</h4>
-<hr />
+<h1 class="pb-3">Create Student</h1>
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -63,40 +68,35 @@
                 <span asp-validation-for="Student.CourseId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <table>
-                        <tr>
-                            @{
+                <label asp-for="Student.StudentClubMemberships" class="control-label"></label>
+                    <table class="table-spacing">
+                        @{
                                 int cnt = 0;
 
                                 foreach (var club in Model.AssignedClubDataList)
                                 {
                                     if (cnt++ % 3 == 0)
                                     {
-                                    @:</tr><tr>
+                                    @:<tr>
                                     }
                                     @:<td>
                                         <input type="checkbox"
                                                name="selectedClubs"
                                                value="@club.ClubID"
                                                @(Html.Raw(club.Assigned ? "checked=\"checked\"" : "")) />
-                                        @club.ClubID @:  @club.Name
+                                        @:  @club.Name
                                     @:</td>
                                 }
                             @:</tr>
                             }
                         </table>
                     </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
+            <div class="form-group d-flex justify-content-end">
+                <a asp-page="Index" class="btn">Back to List</a>
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
             </form>
     </div>
-</div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
