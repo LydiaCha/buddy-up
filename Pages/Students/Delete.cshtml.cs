@@ -10,7 +10,7 @@ using buddy_up.Models;
 
 namespace buddy_up.Pages.Students
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : DropdownsPageModel
     {
         private readonly buddy_up.Data.ApplicationDbContext _context;
 
@@ -21,6 +21,7 @@ namespace buddy_up.Pages.Students
 
         [BindProperty]
         public Student Student { get; set; }
+        public IList<BuddyMatch> BuddyMatch { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -45,14 +46,25 @@ namespace buddy_up.Pages.Students
                 return NotFound();
             }
 
-            Student = await _context.Student.FindAsync(id);
-
-            if (Student != null)
+        if (Student != null)
             {
+                Student = await _context.Student
+                        .Include(s => s.Country)
+                        .Include(s => s.Course)
+                        .Include(s => s.StudentClubMemberships)
+                            .ThenInclude(s => s.Club)
+                        .SingleAsync(s => s.StudentID == id);
+
+                BuddyMatch = await _context.BuddyMatch
+    .Include(bm => bm.MenteeId)
+    .Include(bm => bm.MentorId)
+    .AsNoTracking()
+    .ToListAsync();
+
                 _context.Student.Remove(Student);
                 await _context.SaveChangesAsync();
+            
             }
-
             return RedirectToPage("./Index");
         }
     }
