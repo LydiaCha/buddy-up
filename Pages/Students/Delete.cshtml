@@ -10,47 +10,63 @@
 <div class="row">
     <div class="col-md-6">
         <dl class="row">
-            <dt class="col-sm-4">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Student.FirstName)
             </dt>
-            <dd class="col-sm-8">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Student.FirstName)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Student.LastName)
             </dt>
-            <dd class="col-sm-8">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Student.LastName)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Student.Address)
             </dt>
-            <dd class="col-sm-8">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Student.Address)
+                @Html.DisplayFor(model => model.Student.Country.Name)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Student.YearOfStudy)
             </dt>
-            <dd class="col-sm-8">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Student.YearOfStudy)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Student.EmailAddress)
             </dt>
-            <dd class="col-sm-8">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Student.EmailAddress)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Student.DateOfBirth)
             </dt>
-            <dd class="col-sm-8">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Student.DateOfBirth)
             </dd>
-            <dt class="col-sm-4">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Student.TelephoneNumber)
             </dt>
-            <dd class="col-sm-8">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Student.TelephoneNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Student.Course)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Student.Course.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Student.StudentClubMemberships)
+            </dt>
+            <dd class="col-sm-10">
+                @foreach (var club in Model.Student.StudentClubMemberships)
+                {
+                    <div> @club.Club.Name </div>
+                }
             </dd>
         </dl>
         <form method="post" class="form-group d-flex justify-content-end">

@@ -66,8 +66,8 @@
             </td>
             <td class="text-center">
                 @foreach (var entry in Model.BuddyMatch) {
-                    @if (entry.MentorId.StudentID == item.StudentID) { <i class="fas fa-check icon-green"></i> }
-                    else if (entry.MenteeId.StudentID == item.StudentID) { <i class="fas fa-check icon-green"></i> }
+                    @if (entry.MentorId == item.StudentID) { <i class="fas fa-check icon-green"></i> }
+                    else if (entry.MenteeId == item.StudentID) { <i class="fas fa-check icon-green"></i> }
                     else { <i class="fas fa-times icon-red"></i> }
                 }
             </td>

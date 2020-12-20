@@ -21,7 +21,6 @@ namespace buddy_up.Pages.Students
 
         public string NameSort { get; set; }
         public string CourseSort { get; set; }
-        public string CurrentFilter { get; set; }
         public string CurrentSort { get; set; }
         public IList<Student> Student { get;set; }
         public IList<BuddyMatch> BuddyMatch { get; set; }
@@ -59,8 +58,8 @@ namespace buddy_up.Pages.Students
                 .ToListAsync();
 
             BuddyMatch = await _context.BuddyMatch
-                .Include(bm => bm.MenteeId)
-                .Include(bm => bm.MentorId)
+                .Include(bm => bm.Mentee)
+                .Include(bm => bm.Mentor)
                 .AsNoTracking()
                 .ToListAsync();
         }
