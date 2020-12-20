@@ -22,6 +22,7 @@ namespace buddy_up.Pages.Students
         [BindProperty]
         public Student Student { get; set; }
         public IList<BuddyMatch> BuddyMatch { get; set; }
+        public Student Buddy { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,6 +39,16 @@ namespace buddy_up.Pages.Students
                    .Include(s => s.StudentClubMemberships)
                        .ThenInclude(s => s.Club)
                    .SingleAsync(s => s.StudentID == id);
+
+            foreach (var entry in BuddyMatch)
+            {
+                if (entry.MentorId == Student.StudentID)
+                { Buddy = await _context.Student.SingleOrDefaultAsync(s => s.StudentID == entry.MenteeId); }
+                else if (entry.MenteeId == Student.StudentID)
+                { Buddy = await _context.Student.SingleOrDefaultAsync(s => s.StudentID == entry.MentorId); }
+                else
+                { Buddy = null; }
+            }
 
             if (id == null)
             {
