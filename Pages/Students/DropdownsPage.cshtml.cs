@@ -75,7 +75,7 @@ namespace buddy_up.Pages.Students
                 {
                     if (!studentClubs.Contains(club.ClubID))
                     {
-                        studentToUpdate.StudentClubMemberships.Add(new StudentClubMembership { StudentID = studentToUpdate.StudentID, ClubID = club.ClubID });
+                        studentToUpdate.StudentClubMemberships.Add(new StudentClubMembership { StudentID = (int)studentToUpdate.StudentID, ClubID = club.ClubID });
                     }
                 }
                 else

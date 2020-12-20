@@ -112,11 +112,11 @@ namespace buddy_up.Data
 
             var studentClubMemberships = new StudentClubMembership[]
             {
-                new StudentClubMembership{StudentID=students.Single(s => (s.FirstName == "Carson" && s.LastName == "Alexander")).StudentID,
+                new StudentClubMembership{StudentID=(int)students.Single(s => (s.FirstName == "Carson" && s.LastName == "Alexander")).StudentID,
                     ClubID=clubs.Single(c => c.Name == "Snowboarding").ClubID },
-                new StudentClubMembership{StudentID=students.Single(s => (s.FirstName == "Tom" && s.LastName == "Jones")).StudentID,
+                new StudentClubMembership{StudentID=(int)students.Single(s => (s.FirstName == "Tom" && s.LastName == "Jones")).StudentID,
                     ClubID=clubs.Single(c => c.Name == "Knitting").ClubID },
-                new StudentClubMembership{StudentID=students.Single(s => (s.FirstName == "Deborah" && s.LastName == "Morgan")).StudentID,
+                new StudentClubMembership{StudentID=(int)students.Single(s => (s.FirstName == "Deborah" && s.LastName == "Morgan")).StudentID,
                     ClubID=clubs.Single(c => c.Name == "Running").ClubID }
             };
             foreach (StudentClubMembership scm in studentClubMemberships)
@@ -142,7 +142,7 @@ namespace buddy_up.Data
 
             var buddyMatch = new BuddyMatch[]
            {
-            new BuddyMatch{ MentorId=students.Single(s => s.FirstName == "Deborah" && s.LastName == "Morgan"), MenteeId=students.Single(s => s.FirstName == "Tom" && s.LastName == "Jones") }
+            new BuddyMatch{ Mentor=students.Single(s => s.FirstName == "Deborah" && s.LastName == "Morgan"), Mentee=students.Single(s => s.FirstName == "Tom" && s.LastName == "Jones") }
            };
             foreach (BuddyMatch bm in buddyMatch)
             {

@@ -58,8 +58,8 @@ namespace buddy_up.Pages.Students
                 .ToListAsync();
 
             BuddyMatch = await _context.BuddyMatch
-                .Include(bm => bm.MenteeId)
-                .Include(bm => bm.MentorId)
+                .Include(bm => bm.Mentee)
+                .Include(bm => bm.Mentor)
                 .AsNoTracking()
                 .ToListAsync();
         }

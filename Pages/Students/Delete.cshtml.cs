@@ -27,8 +27,8 @@ namespace buddy_up.Pages.Students
         {
                            
             BuddyMatch = await _context.BuddyMatch
-                    .Include(bm => bm.MenteeId)
-                    .Include(bm => bm.MentorId)
+                    .Include(bm => bm.Mentee)
+                    .Include(bm => bm.Mentor)
                     .AsNoTracking()
                     .ToListAsync();
 
@@ -62,6 +62,14 @@ namespace buddy_up.Pages.Students
 
         if (Student != null)
             {
+                var buddyMatchMentor = await _context.BuddyMatch
+                    .Where(bmm => bmm.MentorId == id)
+                    .ToListAsync();
+                buddyMatchMentor.ForEach(bmm => bmm.MentorId = null);
+                var buddyMatchMentee = await _context.BuddyMatch
+                    .Where(bmm => bmm.MenteeId == id)
+                    .ToListAsync();
+                buddyMatchMentee.ForEach(bmm => bmm.MenteeId = null);
 
                 _context.Student.Remove(Student);
                 await _context.SaveChangesAsync();
