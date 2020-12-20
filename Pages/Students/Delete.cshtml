@@ -68,6 +68,12 @@
                     <div> @club.Club.Name </div>
                 }
             </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.BuddyMatch[0].BuddyMatchID)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Buddy.FullName)
+            </dd>
         </dl>
         <form method="post" class="form-group d-flex justify-content-end">
             <a asp-page="./Index" class="btn">Back to List</a>
