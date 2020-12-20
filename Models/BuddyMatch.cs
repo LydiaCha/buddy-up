@@ -8,6 +8,7 @@ namespace buddy_up.Models
 {
     public class BuddyMatch
     {
+        [Display(Name = "Buddy")]
         public int BuddyMatchID { get; set; }
 
         [Display(Name = "Mentor")]
