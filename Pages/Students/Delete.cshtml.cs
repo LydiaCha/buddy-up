@@ -25,6 +25,20 @@ namespace buddy_up.Pages.Students
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+                           
+            BuddyMatch = await _context.BuddyMatch
+                    .Include(bm => bm.MenteeId)
+                    .Include(bm => bm.MentorId)
+                    .AsNoTracking()
+                    .ToListAsync();
+
+            Student = await _context.Student
+                   .Include(s => s.Country)
+                   .Include(s => s.Course)
+                   .Include(s => s.StudentClubMemberships)
+                       .ThenInclude(s => s.Club)
+                   .SingleAsync(s => s.StudentID == id);
+
             if (id == null)
             {
                 return NotFound();
@@ -48,18 +62,6 @@ namespace buddy_up.Pages.Students
 
         if (Student != null)
             {
-                Student = await _context.Student
-                        .Include(s => s.Country)
-                        .Include(s => s.Course)
-                        .Include(s => s.StudentClubMemberships)
-                            .ThenInclude(s => s.Club)
-                        .SingleAsync(s => s.StudentID == id);
-
-                BuddyMatch = await _context.BuddyMatch
-    .Include(bm => bm.MenteeId)
-    .Include(bm => bm.MentorId)
-    .AsNoTracking()
-    .ToListAsync();
 
                 _context.Student.Remove(Student);
                 await _context.SaveChangesAsync();
