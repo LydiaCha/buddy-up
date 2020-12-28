@@ -38,7 +38,6 @@ namespace buddy_up.Pages
                                             select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-          
                 switch (otherFilter)
                 {
                     case "name":
@@ -48,9 +47,13 @@ namespace buddy_up.Pages
                     case "course":
                         studentIQ = studentIQ.Where(s => s.Course.Name.Contains(searchString));
                         break;
+                    case "club":
+                        studentIQ = studentIQ.Where(s => s.StudentClubMemberships.Any(c => c.Club.Name.Contains(searchString)));
+                        break;
                     default:
-                        studentIQ = studentIQ.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstName.Contains(searchString));
+                        studentIQ = studentIQ = studentIQ.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString) || s.Course.Name.Contains(searchString)
+                                       || s.StudentClubMemberships.Any(c => c.Club.Name.Contains(searchString)));
                         break;
                 }
             }

@@ -9,17 +9,20 @@
 
 <form asp-page="./Index" method="get">
     <div class="form-actions no-color">
+
+        <label>Select Filter</label>
+        <select class="form-control" name="OtherFilter">
+            <option value="">Please select...</option>
+            <option value="name">Name</option>
+            <option value="course">Course</option>
+            <option value="club">Club</option>
+        </select>
         <p>
-            Find by name:
+            Filter Search
+            </p>
             <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-            <label>Search by</label>
-            <select class="form-control" name="OtherFilter">
-                <option value="name">-- name --</option>
-                <option value="course">-- course --</option>
-            </select>
             <input type="submit" value="Search" class="btn btn-default" /> |
             <a asp-page="./Index">Back to full List</a>
-        </p>
 
     </div>
     <tbody>
