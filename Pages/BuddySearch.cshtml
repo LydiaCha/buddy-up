@@ -16,4 +16,39 @@
             <a asp-page="./Index">Back to full List</a>
         </p>
     </div>
+    <tbody>
+        @foreach (var item in Model.Student)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Name)
+                </td>
+                <td>
+                    @foreach (var club in item.StudentClubMemberships)
+                    {
+                        <div> @club.Club.Name </div>
+                    }
+                </td>
+                <td class="text-center">
+                    @foreach (var entry in Model.BuddyMatch)
+                    {
+                        @if (entry.MentorId == item.StudentID)
+                        {<i class="fas fa-check icon-green"></i> }
+                        else if (entry.MenteeId == item.StudentID)
+                        { <i class="fas fa-check icon-green"></i> }
+                        else
+                        { <i class="fas fa-times icon-red"></i>}
+                    }
+                </td>
+                <td class="text-center">
+                    <a asp-page="./Details" asp-route-id="@item.StudentID" title="Details"><i class="fas fa-info-circle icon"></i></a>
+                    <a asp-page="./Edit" asp-route-id="@item.StudentID" title="Edit"><i class="fas fa-pencil-alt icon pl-2"></i></a>
+                    <a asp-page="./Delete" asp-route-id="@item.StudentID" title="Delete"><i class="fas fa-trash-alt icon pl-2"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </form>
