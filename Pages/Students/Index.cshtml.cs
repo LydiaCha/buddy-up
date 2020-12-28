@@ -22,12 +22,12 @@ namespace buddy_up.Pages.Students
         public string NameSort { get; set; }
         public string CourseSort { get; set; }
         public string CurrentSort { get; set; }
-        public IList<Student> Student { get;set; }
+        public PaginatedList<Student> Student { get;set; }
         public IList<BuddyMatch> BuddyMatch { get; set; }
 
-        public async Task OnGetAsync(string sortOrder)
+        public async Task OnGetAsync(string sortOrder, int? pageIndex)
         {
-           // CurrentSort = sortOrder;
+            CurrentSort = sortOrder;
             NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             CourseSort = sortOrder == "Course" ? "course_desc" : "Course";
 
@@ -49,13 +49,13 @@ namespace buddy_up.Pages.Students
                     break;
             }
 
+            int pageSize = 6;
 
-            Student = await studentIQ
+            Student = await PaginatedList<Student>.CreateAsync(studentIQ
                 .Include(s => s.Course)
                 .Include(s => s.StudentClubMemberships)
                     .ThenInclude(s => s.Club)
-                .AsNoTracking()
-                .ToListAsync();
+                .AsNoTracking(), pageIndex ?? 1, pageSize);
 
             BuddyMatch = await _context.BuddyMatch
                 .Include(bm => bm.Mentee)
