@@ -12,9 +12,15 @@
         <p>
             Find by name:
             <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <label>Search by</label>
+            <select class="form-control" name="OtherFilter">
+                <option value="name">-- name --</option>
+                <option value="course">-- course --</option>
+            </select>
             <input type="submit" value="Search" class="btn btn-default" /> |
             <a asp-page="./Index">Back to full List</a>
         </p>
+
     </div>
     <tbody>
         @foreach (var item in Model.Student)

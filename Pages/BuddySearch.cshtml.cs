@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using buddy_up.Models;
+using buddy_up.Pages.Students;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace buddy_up.Pages
 {
-    public class BuddySearchModel : PageModel
+    public class BuddySearchModel : DropdownsPageModel
     {
 
         private readonly buddy_up.Data.ApplicationDbContext _context;
@@ -22,22 +23,36 @@ namespace buddy_up.Pages
         public string CurrentFilter { get; set; }
         public string CurrentSort { get; set; }
 
+        public string CurrentOtherFilter { get; set; }
+
         public IList<Student> Student { get; set; }
         public IList<BuddyMatch> BuddyMatch { get; set; }
 
-        public async Task OnGetAsync(string sortOrder, string searchString)
+        public async Task OnGetAsync(string sortOrder, string searchString, string otherFilter = null)
         {
 
-
-
+            CurrentOtherFilter = otherFilter;
             CurrentSort = sortOrder;
             CurrentFilter = searchString;
             IQueryable<Student> studentIQ = from s in _context.Student
                                             select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                studentIQ = studentIQ.Where(s => s.LastName.Contains(searchString)
+          
+                switch (otherFilter)
+                {
+                    case "name":
+                        studentIQ = studentIQ.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstName.Contains(searchString));
+                        break;
+                    case "course":
+                        studentIQ = studentIQ.Where(s => s.Course.Name.Contains(searchString));
+                        break;
+                    default:
+                        studentIQ = studentIQ.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString));
+                        break;
+                }
             }
 
             Student = await studentIQ

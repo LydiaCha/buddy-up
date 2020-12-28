@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using buddy_up.Data;
 using buddy_up.Models;
@@ -14,6 +15,12 @@ namespace buddy_up.Pages.Students
 {
     public class DropdownsPageModel : PageModel
     {
+        public SelectList TableNameSL { get; set; }
+        public void PopulateTablesDropDownList(buddy_up.Data.ApplicationDbContext _context, object selectedTable = null)
+        {
+       
+        }
+
         public SelectList CountryNameSL { get; set; }
 
         public void PopulateCoutryDropDownList(buddy_up.Data.ApplicationDbContext _context,
