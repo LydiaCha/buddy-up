@@ -67,24 +67,31 @@
                     }
                 </td>
                 <td class="text-center">
-                    @{ 
-                    foreach (var entry in Model.BuddyMatch)
-                    {
-                        if (entry.MentorId == item.StudentID)
-                        {Model.buddyCount = 1;
-                        }
-                        else if (entry.MenteeId == item.StudentID)
-                        {Model.buddyCount = 1;
-                        } 
-                    }
-                        }
-                        @if (Model.buddyCount > 0 )
+                    @{
+                        foreach (var entry in Model.BuddyMatch)
                         {
-                    <i class="fas fa-check icon-green"></i>}
-                    else
-                    { 
-                    <i class="fas fa-times icon-red"></i>}
-                    
+                            if (entry.Mentor != null && entry.Mentee != null)
+
+                            {
+                                if (entry.Mentor.StudentID == item.StudentID || entry.Mentee.StudentID == item.StudentID)
+                                {
+                                        <i class="fas fa-check icon-green"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-times icon-red"></i>
+                                }
+                                
+                            }
+                        }
+
+                        @*                    @if (Model.buddyCount > 0)
+            {
+                <i class="fas fa-check icon-green"></i>}
+            else
+            {
+                <i class="fas fa-times icon-red"></i>}*@
+                    }
 
                 </td>
                 <td class="text-center">
