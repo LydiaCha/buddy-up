@@ -20,12 +20,13 @@ namespace buddy_up.Pages.Students
             _context = context;
         }
 
+        public IList<BuddyMatch> BuddyMatch { get; set; }
         public IActionResult OnGet()
         {
             var student = new Student();
             student.StudentClubMemberships = new List<StudentClubMembership>();
             PopulateAssignedClubData(_context, student);
-
+            PopulateStudentDropDownList(_context);
             PopulateCoutryDropDownList(_context);
             PopulateCourseDropDownList(_context);
             return Page();
@@ -38,12 +39,14 @@ namespace buddy_up.Pages.Students
         public async Task<IActionResult> OnPostAsync(string[] selectedClubs)
         {
             var emptyStudent = new Student();
+            var buddyMatch = new BuddyMatch();
  
             if (!ModelState.IsValid)
             {
                 PopulateCoutryDropDownList(_context, emptyStudent.CountryId);
                 PopulateCourseDropDownList(_context, emptyStudent.CourseId);
                 PopulateAssignedClubData(_context, emptyStudent);
+                PopulateStudentDropDownList(_context, emptyStudent.StudentID);
                 return Page();
             }
 
@@ -68,7 +71,15 @@ namespace buddy_up.Pages.Students
                 s => s.DateOfBirth, s => s.TelephoneNumber
                  ))
             {
-            _context.Student.Add(emptyStudent);
+
+                var buddyFormResult = Request.Form["buddy"];
+                Int32.TryParse(buddyFormResult, out int buddyId);
+
+                buddyMatch = new BuddyMatch { Mentee = emptyStudent, Mentor = _context.Student.SingleOrDefault(s => s.StudentID == buddyId) };
+           
+                _context.Student.Add(emptyStudent);
+                _context.BuddyMatch.Add(buddyMatch);
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
@@ -77,7 +88,16 @@ namespace buddy_up.Pages.Students
             PopulateCoutryDropDownList(_context, emptyStudent.CountryId);
             PopulateCourseDropDownList(_context, emptyStudent.CourseId);
             PopulateAssignedClubData(_context, Student);
+
+            BuddyMatch = await _context.BuddyMatch
+    .Include(bm => bm.Mentee)
+    .Include(bm => bm.Mentor)
+    .AsNoTracking()
+    .ToListAsync();
+
+
             return Page();
         }
+
     }
 }
