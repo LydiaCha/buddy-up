@@ -69,34 +69,41 @@
             </div>
             <div class="form-group">
                 <label asp-for="Student.StudentClubMemberships" class="control-label"></label>
-                    <table class="table-spacing">
-                        @{
-                                int cnt = 0;
+                <table class="table-spacing">
+                    @{
+                        int cnt = 0;
 
-                                foreach (var club in Model.AssignedClubDataList)
-                                {
-                                    if (cnt++ % 3 == 0)
-                                    {
-                                    @:<tr>
-                                    }
-                                    @:<td>
-                                        <input type="checkbox"
-                                               name="selectedClubs"
-                                               value="@club.ClubID"
-                                               @(Html.Raw(club.Assigned ? "checked=\"checked\"" : "")) />
-                                        @:  @club.Name
-                                    @:</td>
+                        foreach (var club in Model.AssignedClubDataList)
+                        {
+                            if (cnt++ % 3 == 0)
+                            {
+                                @:<tr>
                                 }
-                            @:</tr>
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedClubs"
+                                           value="@club.ClubID"
+                                           @(Html.Raw(club.Assigned ? "checked=\"checked\"" : "")) />
+                                    @:  @club.Name
+                                @:</td>
                             }
+                        @:</tr>
+                    }
+                </table>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Buddy</label>
+                <select asp-for="Student" class="form-control" asp-items="@Model.StudentNameSL" name="buddy">
+                    <option value="">-- Select Buddy --</option>
+                </select>
+            </div>
 
-                        </table>
-                    </div>
+
             <div class="form-group d-flex justify-content-end">
                 <a asp-page="Index" class="btn">Back to List</a>
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
-            </form>
+        </form>
     </div>
 </div>
 
