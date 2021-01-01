@@ -19,6 +19,7 @@ namespace buddy_up.Pages.Students
             _context = context;
         }
 
+        public int buddyCount { get; set; }
         public string NameSort { get; set; }
         public string CourseSort { get; set; }
         public string CurrentSort { get; set; }

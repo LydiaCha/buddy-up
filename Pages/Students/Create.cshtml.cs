@@ -39,6 +39,7 @@ namespace buddy_up.Pages.Students
         public async Task<IActionResult> OnPostAsync(string[] selectedClubs)
         {
             var emptyStudent = new Student();
+            var buddyMatch = new BuddyMatch();
  
             if (!ModelState.IsValid)
             {
@@ -70,7 +71,13 @@ namespace buddy_up.Pages.Students
                 s => s.DateOfBirth, s => s.TelephoneNumber
                  ))
             {
-            _context.Student.Add(emptyStudent);
+
+
+                buddyMatch = new BuddyMatch { Mentor = emptyStudent, Mentee = emptyStudent };
+           
+                _context.Student.Add(emptyStudent);
+                _context.BuddyMatch.Add(buddyMatch);
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

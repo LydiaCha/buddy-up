@@ -67,15 +67,25 @@
                     }
                 </td>
                 <td class="text-center">
-                    @foreach (var entry in Model.BuddyMatch)
+                    @{ 
+                    foreach (var entry in Model.BuddyMatch)
                     {
-                        @if (entry.MentorId == item.StudentID)
-                        {<i class="fas fa-check icon-green"></i> }
+                        if (entry.MentorId == item.StudentID)
+                        {Model.buddyCount = 1;
+                        }
                         else if (entry.MenteeId == item.StudentID)
-                        { <i class="fas fa-check icon-green"></i> }
-                        else
-                        { <i class="fas fa-times icon-red"></i>}
+                        {Model.buddyCount = 1;
+                        } 
                     }
+                        }
+                        @if (Model.buddyCount > 0 )
+                        {
+                    <i class="fas fa-check icon-green"></i>}
+                    else
+                    { 
+                    <i class="fas fa-times icon-red"></i>}
+                    
+
                 </td>
                 <td class="text-center">
                     <a asp-page="./Details" asp-route-id="@item.StudentID" title="Details"><i class="fas fa-info-circle icon"></i></a>
