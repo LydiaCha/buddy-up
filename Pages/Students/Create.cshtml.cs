@@ -72,8 +72,10 @@ namespace buddy_up.Pages.Students
                  ))
             {
 
+                var buddyFormResult = Request.Form["buddy"];
+                Int32.TryParse(buddyFormResult, out int buddyId);
 
-                buddyMatch = new BuddyMatch { Mentor = emptyStudent, Mentee = emptyStudent };
+                buddyMatch = new BuddyMatch { Mentee = emptyStudent, Mentor = _context.Student.SingleOrDefault(s => s.StudentID == buddyId) };
            
                 _context.Student.Add(emptyStudent);
                 _context.BuddyMatch.Add(buddyMatch);
