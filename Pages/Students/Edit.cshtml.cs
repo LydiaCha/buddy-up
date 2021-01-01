@@ -33,13 +33,9 @@ namespace buddy_up.Pages.Students
 
             Student = await _context.Student
                 .Include(s => s.StudentClubMemberships).ThenInclude(s => s.Club)
-                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.StudentID == id);
 
-            BuddyMatch = await _context.BuddyMatch
-.Include(bm => bm.Mentee)
-.Include(bm => bm.Mentor)
-.AsNoTracking()
+            BuddyMatch = await _context.BuddyMatch.Include(bm => bm.Mentee).Include(bm => bm.Mentor)
 .FirstOrDefaultAsync(bm => bm.MenteeId == id || bm.MentorId == id);
 
             if (Student == null)
@@ -58,22 +54,24 @@ namespace buddy_up.Pages.Students
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync(int? id, string[] selectedClubs)
         {
-            var studentToUpdate = await _context.Student
-                .Include(s => s.StudentClubMemberships).ThenInclude(s => s.Club)
+            var studentToUpdate = await _context.Student.Include(s => s.StudentClubMemberships).ThenInclude(s => s.Club)
                 .FirstOrDefaultAsync(m => m.StudentID == id);
 
-            var matchToUpdate = await _context.BuddyMatch
-.Include(bm => bm.Mentee)
-.Include(bm => bm.Mentor)
-.AsNoTracking()
+            var matchToUpdate = await _context.BuddyMatch.Include(bm => bm.Mentee).Include(bm => bm.Mentor)
 .FirstOrDefaultAsync(bm => bm.MenteeId == id || bm.MentorId == id);
+
+            var buddyMatchMentor = await _context.BuddyMatch.Where(bmm => bmm.MentorId == id)
+.ToListAsync();
+
+            var buddyMatchMentee = await _context.BuddyMatch.Where(bmm => bmm.MenteeId == id)
+    .ToListAsync();
 
             if (!ModelState.IsValid)
             {
                 PopulateCoutryDropDownList(_context, studentToUpdate.CountryId);
                 PopulateCourseDropDownList(_context, studentToUpdate.CourseId);
                 PopulateAssignedClubData(_context, studentToUpdate);
-                PopulateStudentDropDownList(_context);
+                PopulateStudentDropDownList(_context, matchToUpdate.BuddyMatchID);
                 return Page();
             }
 
@@ -86,13 +84,17 @@ namespace buddy_up.Pages.Students
                    ))
             {
 
+                buddyMatchMentor.ForEach(bmm => bmm.MentorId = null);
+                buddyMatchMentee.ForEach(bmm => bmm.MenteeId = null);
+
+                _context.BuddyMatch.Remove(matchToUpdate);
+
                 var buddyFormResult = Request.Form["buddy"];
                 Int32.TryParse(buddyFormResult, out int buddyId);
-
-                await TryUpdateModelAsync<BuddyMatch>(
-                    matchToUpdate,
-                    "buddyMatch",
-                    bm => bm.Mentee, bm => bm.Mentor);
+                
+                var buddyMatch = new BuddyMatch { Mentee = studentToUpdate, Mentor = _context.Student.SingleOrDefault(s => s.StudentID == buddyId) };
+             
+                _context.BuddyMatch.Add(buddyMatch);
 
                 UpdateStudentClubs(_context, selectedClubs, studentToUpdate);
                 await _context.SaveChangesAsync();
@@ -103,7 +105,7 @@ namespace buddy_up.Pages.Students
             PopulateCoutryDropDownList(_context, studentToUpdate.CountryId);
             PopulateCourseDropDownList(_context, studentToUpdate.CourseId);
             PopulateAssignedClubData(_context, studentToUpdate);
-            PopulateStudentDropDownList(_context);
+            PopulateStudentDropDownList(_context, matchToUpdate.BuddyMatchID);
             return Page();
         }
         }
