@@ -69,7 +69,7 @@ namespace buddy_up.Pages.Students
                  ))
             {
             _context.Student.Add(emptyStudent);
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
             }
