@@ -92,9 +92,20 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Buddy</label>
-                <select asp-for="BuddyMatch.MentorId" class="form-control" asp-items="@Model.StudentNameSL" name="buddy">
-                    <option value="">-- Select Buddy --</option>
-                </select>
+                    
+                        @if (Model.BuddyMatch.MentorId == Model.Student.StudentID)
+                        {<select asp-for="BuddyMatch.MenteeId" class="form-control" asp-items="@Model.StudentNameSL" name="buddy">
+                             <option value="">-- Select Buddy --</option>
+                            </select>
+                        }
+                        else 
+                        {
+                         <select asp-for="BuddyMatch.MentorId" class="form-control" asp-items="@Model.StudentNameSL" name="buddy">
+                             <option value="">-- Select Buddy --</option>
+                         </select>
+                        }
+                        
+
             </div>
             <div class="form-group d-flex justify-content-end">
                 <a asp-page="./Index" class="btn">Back to List</a>
