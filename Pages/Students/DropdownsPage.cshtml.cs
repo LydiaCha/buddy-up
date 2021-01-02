@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using buddy_up.Data;
 using buddy_up.Models;
@@ -14,9 +15,16 @@ namespace buddy_up.Pages.Students
 {
     public class DropdownsPageModel : PageModel
     {
+        public SelectList StudentNameSL { get; set; }
+
+        public void PopulateStudentDropDownList(ApplicationDbContext _context, object selectedStudent = null)
+        {
+            var studentQuery = from s in _context.Student orderby s.LastName select s;
+            StudentNameSL = new SelectList(studentQuery.AsNoTracking(), "StudentID", "FullName", selectedStudent);
+        }
         public SelectList CountryNameSL { get; set; }
 
-        public void PopulateCoutryDropDownList(buddy_up.Data.ApplicationDbContext _context,
+        public void PopulateCoutryDropDownList(ApplicationDbContext _context,
             object selectedCountry = null)
         {
             var countryQuery = from c in _context.Country
@@ -29,7 +37,7 @@ namespace buddy_up.Pages.Students
 
         public SelectList CourseNameSL { get; set; }
 
-        public void PopulateCourseDropDownList(buddy_up.Data.ApplicationDbContext _context,
+        public void PopulateCourseDropDownList(ApplicationDbContext _context,
             object selectedCourse = null)
         {
             var courseQuery = from c in _context.Course
@@ -75,7 +83,7 @@ namespace buddy_up.Pages.Students
                 {
                     if (!studentClubs.Contains(club.ClubID))
                     {
-                        studentToUpdate.StudentClubMemberships.Add(new StudentClubMembership { StudentID = studentToUpdate.StudentID, ClubID = club.ClubID });
+                        studentToUpdate.StudentClubMemberships.Add(new StudentClubMembership { StudentID = (int)studentToUpdate.StudentID, ClubID = club.ClubID });
                     }
                 }
                 else

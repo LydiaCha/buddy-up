@@ -10,15 +10,16 @@
         color: #000;
         font-size: 20px;
     }
+
     .icon-green {
         color: #0dd95b;
         font-size: 20px;
     }
+
     .icon-red {
         color: #e80909;
         font-size: 20px;
     }
-    
 </style>
 
 
@@ -33,7 +34,7 @@
                     <i class="fas fa-sort icon"></i>
                 </a>
             </th>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].Course.Name)
                 <a asp-page="./Index" asp-route-sortOrder="@Model.CourseSort" title="Sort">
@@ -50,33 +51,66 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Student) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course.Name)
-            </td>
-            <td>
-                @foreach (var club in item.StudentClubMemberships) 
-                { 
-                <div> @club.Club.Name </div>
-                }
-            </td>
-            <td class="text-center">
-                @foreach (var entry in Model.BuddyMatch) {
-                    @if (entry.MentorId.StudentID == item.StudentID) { <i class="fas fa-check icon-green"></i> }
-                    else if (entry.MenteeId.StudentID == item.StudentID) { <i class="fas fa-check icon-green"></i> }
-                    else { <i class="fas fa-times icon-red"></i> }
-                }
-            </td>
-            <td class="text-center">
-                <a asp-page="./Details" asp-route-id="@item.StudentID" title="Details"><i class="fas fa-info-circle icon"></i></a>
-                <a asp-page="./Edit" asp-route-id="@item.StudentID" title="Edit"><i class="fas fa-pencil-alt icon pl-2"></i></a>
-                <a asp-page="./Delete" asp-route-id="@item.StudentID" title="Delete"><i class="fas fa-trash-alt icon pl-2"></i></a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Student)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Name)
+                </td>
+                <td>
+                    @foreach (var club in item.StudentClubMemberships)
+                    {
+                        <div> @club.Club.Name </div>
+                    }
+                </td>
+                <td class="text-center">
+                    @{
+                        foreach (var entry in Model.BuddyMatch)
+                        {
+                            if (entry.Mentor != null && entry.Mentee != null)
+
+                            {
+                                if (entry.Mentor.StudentID == item.StudentID || entry.Mentee.StudentID == item.StudentID)
+                                {
+                                        <i class="fas fa-check icon-green"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-times icon-red"></i>
+                                }
+                                
+                            }
+                        }
+                    }
+
+                </td>
+                <td class="text-center">
+                    <a asp-page="./Details" asp-route-id="@item.StudentID" title="Details"><i class="fas fa-info-circle icon"></i></a>
+                    <a asp-page="./Edit" asp-route-id="@item.StudentID" title="Edit"><i class="fas fa-pencil-alt icon pl-2"></i></a>
+                    <a asp-page="./Delete" asp-route-id="@item.StudentID" title="Delete"><i class="fas fa-trash-alt icon pl-2"></i></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.Student.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Student.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Student.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Student.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
