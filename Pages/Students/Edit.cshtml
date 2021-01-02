@@ -96,7 +96,7 @@
             <div class="form-group">
                 <label class="control-label">Buddy</label>
                     
-                        @if (Model.BuddyMatch.MentorId == Model.Student.StudentID)
+                        @if (Model.BuddyMatch != null && Model.BuddyMatch.MentorId == Model.Student.StudentID)
                         {<select asp-for="BuddyMatch.MenteeId" class="form-control" asp-items="@Model.StudentNameSL" name="buddy">
                              <option value="">-- Select Buddy --</option>
                             </select>
