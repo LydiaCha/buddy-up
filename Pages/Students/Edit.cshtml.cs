@@ -46,7 +46,13 @@ namespace buddy_up.Pages.Students
             PopulateCoutryDropDownList(_context, Student.CountryId);
             PopulateCourseDropDownList(_context, Student.CourseId);
             PopulateAssignedClubData(_context, Student);
-            PopulateStudentDropDownList(_context, BuddyMatch.BuddyMatchID);
+            if (BuddyMatch != null)
+            {
+                PopulateStudentDropDownList(_context, BuddyMatch.BuddyMatchID);
+            }
+            else {
+                PopulateStudentDropDownList(_context);
+            }
             return Page();
         }
 
@@ -56,9 +62,6 @@ namespace buddy_up.Pages.Students
         {
             var studentToUpdate = await _context.Student.Include(s => s.StudentClubMemberships).ThenInclude(s => s.Club)
                 .FirstOrDefaultAsync(m => m.StudentID == id);
-
-            var matchToUpdate = await _context.BuddyMatch.Include(bm => bm.Mentee).Include(bm => bm.Mentor)
-.FirstOrDefaultAsync(bm => bm.MenteeId == id || bm.MentorId == id);
 
             var buddyMatchMentor = await _context.BuddyMatch.Where(bmm => bmm.MentorId == id)
 .ToListAsync();
@@ -71,7 +74,7 @@ namespace buddy_up.Pages.Students
                 PopulateCoutryDropDownList(_context, studentToUpdate.CountryId);
                 PopulateCourseDropDownList(_context, studentToUpdate.CourseId);
                 PopulateAssignedClubData(_context, studentToUpdate);
-                PopulateStudentDropDownList(_context, matchToUpdate.BuddyMatchID);
+                PopulateStudentDropDownList(_context);
                 return Page();
             }
 
@@ -87,7 +90,13 @@ namespace buddy_up.Pages.Students
                 buddyMatchMentor.ForEach(bmm => bmm.MentorId = null);
                 buddyMatchMentee.ForEach(bmm => bmm.MenteeId = null);
 
-                _context.BuddyMatch.Remove(matchToUpdate);
+                if (BuddyMatch != null)
+                {
+                    var matchToUpdate = await _context.BuddyMatch.Include(bm => bm.Mentee).Include(bm => bm.Mentor)
+        .FirstOrDefaultAsync(bm => bm.MenteeId == id || bm.MentorId == id);
+
+                    _context.BuddyMatch.Remove(matchToUpdate);
+                }
 
                 var buddyFormResult = Request.Form["buddy"];
                 Int32.TryParse(buddyFormResult, out int buddyId);
@@ -105,7 +114,7 @@ namespace buddy_up.Pages.Students
             PopulateCoutryDropDownList(_context, studentToUpdate.CountryId);
             PopulateCourseDropDownList(_context, studentToUpdate.CourseId);
             PopulateAssignedClubData(_context, studentToUpdate);
-            PopulateStudentDropDownList(_context, matchToUpdate.BuddyMatchID);
+            PopulateStudentDropDownList(_context);
             return Page();
         }
         }
