@@ -28,6 +28,9 @@ namespace buddy_up.Pages.Students
 
         public async Task OnGetAsync(string sortOrder, int? pageIndex)
         {
+
+            System.Diagnostics.Debug.WriteLine("Sort: " + sortOrder);
+
             CurrentSort = sortOrder;
             NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             CourseSort = sortOrder == "Course" ? "course_desc" : "Course";

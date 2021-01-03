@@ -28,21 +28,21 @@ namespace buddy_up.Pages
         public IList<Student> Student { get; set; }
         public IList<BuddyMatch> BuddyMatch { get; set; }
         public string NameSort { get; set; }
-        public string CourseSort
-        {
-            get; set;
-        }
+        public string CourseSort { get; set; }
 
-        public async Task OnGetAsync(string sortOrder, string searchString, string otherFilter = null)
+        public async Task OnGetAsync(string searchString, string sortOrder, string otherFilter = null)
         {
-
             CurrentOtherFilter = otherFilter;
+
             CurrentSort = sortOrder;
+
             NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             CourseSort = sortOrder == "Course" ? "course_desc" : "Course";
+            
             CurrentFilter = searchString;
             IQueryable<Student> studentIQ = from s in _context.Student
                                             select s;
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 switch (otherFilter)
@@ -63,7 +63,7 @@ namespace buddy_up.Pages
                                        || s.StudentClubMemberships.Any(c => c.Club.Name.Contains(searchString)));
                         break;
                 }
-            }
+            } 
 
             switch (sortOrder)
             {
@@ -79,7 +79,8 @@ namespace buddy_up.Pages
                 default:
                     studentIQ = studentIQ.OrderBy(s => s.LastName);
                     break;
-            }
+            
+        }
 
             Student = await studentIQ
     .Include(s => s.Course)
