@@ -66,14 +66,14 @@
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Student[0].FullName)
-                    <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort" title="Sort" class="text-right">
+                    <a asp-page="/BuddySearch" asp-route-sortOrder="@Model.NameSort" title="Sort" class="text-right">
                         <i class="fas fa-sort icon"></i>
                     </a>
                 </th>
 
                 <th>
                     @Html.DisplayNameFor(model => model.Student[0].Course.Name)
-                    <a asp-page="./Index" asp-route-sortOrder="@Model.CourseSort" title="Sort">
+                    <a asp-page="/BuddySearch" asp-route-sortOrder="@Model.CourseSort" title="Sort">
                         <i class="fas fa-sort icon"></i>
                     </a>
                 </th>
