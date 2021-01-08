@@ -68,6 +68,8 @@
                 </td>
                 <td class="text-center">
                     @{
+                        bool hasMentor = false;
+                        bool doesnHaveMentor = false;
                         foreach (var entry in Model.BuddyMatch)
                         {
                             if (entry.Mentor != null && entry.Mentee != null)
@@ -75,14 +77,22 @@
                             {
                                 if (entry.Mentor.StudentID == item.StudentID || entry.Mentee.StudentID == item.StudentID)
                                 {
-                                    <i class="fas fa-check icon-green"></i>
+                                    hasMentor = true;
                                 }
                                 else
                                 {
-                                    <i class="fas fa-times icon-red"></i>
+                                    doesnHaveMentor = true;
                                 }
                             }
                         }
+                        if (hasMentor)
+                        {
+                                <i class="fas fa-check icon-green"></i>
+                            }
+                            else if (doesnHaveMentor) {
+                                <i class="fas fa-times icon-red"></i>
+                            }
+                        
                     }
 
                 </td>
